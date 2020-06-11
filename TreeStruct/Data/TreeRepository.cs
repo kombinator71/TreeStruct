@@ -7,7 +7,7 @@ using TreeStruct.Models;
 
 namespace TreeStruct.Data
 {
-    public class TreeRepository : ITreeRepository
+    public class TreeRepository
     {
         public Context _context { get; set; }
         public TreeRepository(Context context)
@@ -24,7 +24,7 @@ namespace TreeStruct.Data
             _context.Remove(entity);
         }
 
-        public async Task<Category> GetCategory(int id)
+        public async Task<Category> GetNode(int id)
         {
             return await _context.Categories
                 .SingleOrDefaultAsync(c => c.Id == id);
@@ -40,6 +40,14 @@ namespace TreeStruct.Data
             return await _context.Categories
                 .Include(c => c.Childs)
                 .SingleOrDefaultAsync(c => c.Id == id);
+        }
+
+        public async Task<IEnumerable<Category>> GetChilds(int id)
+        {
+            return await _context.Categories
+                .Include(c => c.Childs)
+                .Where(c => c.ParentId == id)
+                .ToListAsync();
         }
     }
 }

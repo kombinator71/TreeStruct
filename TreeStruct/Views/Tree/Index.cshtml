@@ -4,55 +4,49 @@
     ViewData["Title"] = "TreeView";
 }
 
-<h1>TreeView</h1>
-
-<div>
-    <h4>TreeViewModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ParentId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ParentId)
-        </dd>
-        @foreach (var child in Model.Childs)
+<div style='font-size: 25px; font-weight:700;'>Tree:</div>
+<ul class="list-group">
+    <li>
+        <span>@Model.Name</span>
+        @if (Model.Childs.Count > 0)
         {
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => child.Id)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => child.Id)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => child.Name)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => child.Name)
-            </dd>
+            @*@await Component.InvokeAsync("AppendTree", new { id = Model.Id })*@
+            <div id="collapse-btn" class="expander-closed" onclick="GetChilds(@Model.Id)"></div>
+            <div id="expandbranch" class="collapse ml-2" expanded="false"></div>
+        }
+    </li>
+</ul>
+
+@section Scripts {
+    <script>
+        function GetChilds(childId) {
+            $.get('/tree/expandbranch', { id: childId }, function (content) {
+                if (document.getElementById("expandbranch").getAttribute("expanded") == "false") {
+                    $("#expandbranch").load("/tree/expandbranch", { id: childId });
+                    $("#expandbranch").attr("expanded", "true");
+                    $("#expandbranch").collapse("show");
+                    document.getElementById("collapse-btn").classList.toggle('expander-open');
+                }
+                else {
+                    document.getElementById("collapse-btn").classList.toggle('expander-open');
+                    $("#expandbranch").collapse("toggle");
+                }
+            });
         }
 
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+        function GetChildsComponent(childId) {
+            $.get('/tree/expandbranch', { id: childId }, function (content) {
+                if (document.getElementById("expandbranch" + childId).getAttribute('expanded') == "false") {
+                    $("#expandbranch" + childId).load('/tree/expandbranch', { id: childId });
+                    $("#expandbranch" + childId).attr("expanded", "true");
+                    $("#expandbranch" + childId).collapse("show");
+                    document.getElementById("collapse-btn" + childId).classList.toggle('expander-open');
+                }
+                else {
+                    document.getElementById("collapse-btn" + childId).classList.toggle('expander-open');
+                    $("#expandbranch" + childId).collapse("toggle");
+                }
+            });
+        }
+    </script>
+}

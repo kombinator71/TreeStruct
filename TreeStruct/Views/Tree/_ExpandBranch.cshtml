@@ -1,0 +1,16 @@
+﻿@model IEnumerable<TreeStruct.ViewModels.TreeViewModel>
+
+<ul>
+    @foreach (var child in Model)
+    {
+    <li>
+        @child.Name
+        @if (child.Childs.Count > 0)
+        {
+            @*@await Component.InvokeAsync("AppendTree", new { id = child.Id })*@
+            <div id="@Html.Raw("collapse-btn" + child.Id)" class="expander-closed" onclick="GetChildsComponent(@child.Id)"></div>
+            <div class="collapse ml-2" id="@Html.Raw("expandbranch" + child.Id)" expanded="false"></div>
+        }
+    </li>
+    }
+</ul>

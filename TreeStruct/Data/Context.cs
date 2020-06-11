@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TreeStruct.Models;
+using TreeStruct.ViewModels;
 
 namespace TreeStruct.Data
 {
@@ -14,5 +15,7 @@ namespace TreeStruct.Data
         }
 
         public DbSet<Category> Categories{ get; set; }
+
+        public DbSet<TreeStruct.ViewModels.TreeViewModel> TreeViewModel { get; set; }
     }
 }

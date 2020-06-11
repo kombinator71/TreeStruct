@@ -1,3 +1,44 @@
-{
-
-}
+[
+  {
+    "Id": 1,
+    "Name": "Root",
+    "Description": "root",
+    "ParentId": null
+  },
+  {
+    "Id": 2,
+    "Name": "Dir 2",
+    "Description": "Main 1",
+    "ParentId": 1
+  },
+  {
+    "Id": 3,
+    "Name": "Dir 3",
+    "Description": "Sub 1 main 1",
+    "ParentId": 2
+  },
+  {
+    "Id": 4,
+    "Name": "Dir 4",
+    "Description": "Main 2",
+    "ParentId": 1
+  },
+  {
+    "Id": 5,
+    "Name": "Dir 5",
+    "Description": "Sub 1 Main 2",
+    "ParentId": 4
+  },
+  {
+    "Id": 6,
+    "Name": "Dir 6",
+    "Description": "Sub 2 Main 2",
+    "ParentId": 4
+  },
+  {
+    "Id": 7,
+    "Name": "Dir 7",
+    "Description": "Sub1 Sub2 Main2",
+    "ParentId": 6
+  }
+]

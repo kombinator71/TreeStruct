@@ -35,7 +35,7 @@ namespace TreeStruct
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddScoped<ITreeRepository, TreeRepository>();
+            services.AddScoped<TreeRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

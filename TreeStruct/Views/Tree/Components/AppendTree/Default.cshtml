@@ -1,0 +1,25 @@
+﻿@model IEnumerable<TreeStruct.ViewModels.TreeViewModel>
+
+<ul>
+    @foreach (var child in Model)
+    {
+    <li>
+        @child.Name
+        @if (child.Childs.Count > 0)
+        {
+            <button onclick="GetChildsComponent(@child.Id)">expand</button>
+            @*@await Component.InvokeAsync("AppendTree", new { id = child.Id })*@
+        }
+    </li>
+    }
+</ul>
+
+@section Scripts {
+    <script>
+    function GetChildsComponent(childId) {
+        $.get('@Url.Action("Tree", "Home")', { id: childId}, function(content){
+            $("#dynamicContentContainer").html(content);
+        });
+    }
+    </script>
+}
